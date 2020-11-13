@@ -28,3 +28,9 @@ Route::match(['get', 'post'], '/edit/{id}', 'MakananController@edit');
 
 //hapus
 Route::delete('/delete/{id}', 'MakananController@delete')->name('makanan.delete');
+
+
+Route::get('/listorder', 'OrderController@index')->name('order.list');
+Route::post('/listorder', 'OrderController@create')->name('order.tambah');
+
+Route::get('/listorder/{id}', 'OrderController@show')->name('order.show');

@@ -1,0 +1,28 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+
+class Order extends Model
+{
+    
+    public function makanans()
+    {
+        return $this->belongsToMany(
+            Makanan::class, 
+            'makanan_order',
+            'order_id',
+            'makanan_id');
+    }
+
+    protected $fillable = [
+        'nama', 
+    ];
+    // protected $casts = [
+    //     'harga_mak' => 'array',
+    //     'nama_mak' => 'array',
+    //     'jumlah_mak' => 'array',
+    //   ];
+}
