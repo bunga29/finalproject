@@ -14,7 +14,7 @@ class Order extends Model
             Makanan::class, 
             'makanan_order',
             'order_id',
-            'makanan_id');
+            'makanan_id')->withPivot('jumlah');
     }
 
     protected $fillable = [

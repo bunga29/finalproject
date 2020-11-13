@@ -9,23 +9,25 @@
 
 
 <div class="container">
-    <button type="button" class="btn btn-success float-left mb-2" data-toggle="modal" data-target="#modalOrder">Order pencet</button>
-    @foreach ($orders as $order)
+    <button type="button" class="btn btn-success p-3 col-md-8 mb-2" data-toggle="modal" data-target="#modalOrder" style="font-size:20px;">ORDER DISINI</button>
     <div class="row">
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">{{$order->nama}}</h5>
-                <a href="{{url('/listorder/'.$order->id)}}" class="btn btn-info"> Lihat</a>
-                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalPesanan{{$order->id}}">
-                    Lihat Pesanan
-                </button> -->
+        @foreach ($orders as $order)
+        <div class="card border-primary col-md-3 ml-2 mb-3" style="max-width: 18rem;">
+            <div class="card-header">{{ $order->nama }}</div>
+            <div class="card-body text-primary">
+                <h5 class="card-title">{{$loop->iteration}} antrian lagi ya..</h5>
+                <ul class="list-group ">
+                    @foreach($order->makanans as $mak)
+                    <li class="list-group-item">{{$mak->nama}}</li>
+                    @endforeach
+                </ul>
             </div>
         </div>
-    @endforeach
+        @endforeach
     </div>
 </div>
 
-<!-- MODAL Order -->
+<!-- MODAL tambah Order -->
 <div class="modal fade" id="modalOrder" tabindex="-1" aria-labelledby="modalTambah" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -57,7 +59,8 @@
                                 <td>{{$makan->nama}}</td>
                                 <td>{{$makan->harga}}</td>
                                 <td><input type="hidden" name="id_mak[]" value="{{$makan->id}}">
-                                    <input type="number" class='jumlah' name="jumlah_mak[]" value="0" min="0" max="100" step="1"/>
+                                    <input type="hidden" id="harga" name="harga_mak[]" value="{{$makan->harga}}">
+                                    <input type="number" id="jumlah" name="jumlah_mak[]" value="0" min="0" max="100" step="1"/>
                                 </td>
                             </tr>
                             @endforeach
@@ -65,24 +68,17 @@
                     </table>
                     <div class="total float-right">
                         <strong>Total</strong>
-                        <span class="total-harga">0</span>
+                        <input type="number" id="total" name="total" value="calc()" />
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary">Lanjutkan Bayar</button>
                 </form>
                 <!--END FORM TAMBAH BARANG-->
-
-                
             </div>
         </div>
     </div>
 </div>
 
-<script>
-// console.log("halo");
-function updateharga(){
-    var item_makanan = document.getElementByClassName('jumlah');
-    console.log("haloo");
-}  
-</script> 
+
+
 
 @endsection

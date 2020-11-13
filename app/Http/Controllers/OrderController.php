@@ -12,17 +12,26 @@ class OrderController extends Controller
     public static function index()
     {
         //mengambil data
-        $makanan = DB::table('makanans')->get();
-        $orders = DB::table('orders')->get();
+        $makanan = Makanan::get();
+        $orders = Order::get();
      
         return view('order.list', ['orders' => $orders, 'makanan' => $makanan]);
     }
 
-    public function show($id)
+    public static function admin()
+    {
+        //mengambil data
+        $makanan = Makanan::get();
+        $orders = Order::get();
+     
+        return view('order.admin', ['orders' => $orders, 'makanan' => $makanan]);
+    }
+
+    public function bayar($id)
     {
         $order = Order::findOrFail($id);
 
-        return view('order.show', ['order' => $order]);
+        return view('order.bayar', ['order' => $order]);
     }
 
     public function create(Request $request)
@@ -44,13 +53,27 @@ class OrderController extends Controller
                 $jumlah = $order_temp->jumlah_mak[$i];
                 $makanan = Makanan::find($id);
                 
-                $order_baru->makanans()->attach($id);
+                $order_baru->makanans()->attach($id, ['jumlah'=>$jumlah]);
             }
             $i++;
         }
         
        
         //dd($order_baru->makanans);
-        return redirect('/listorder')->with('status', 'Mohon ditunggu ya lorr');
+        return redirect()->route('order.bayar', ['id' => $order_baru->id]);
     }
+
+    public function deletee($id)
+    {
+        Order::where(['id'=>$id])->delete();
+        return redirect()->route('order.list')->with('status', 'Ayo pesenn!!');
+    }
+
+    public function delete($id)
+    {
+        Order::where(['id'=>$id])->delete();
+        return redirect()->back()->with('status', 'Yok lanjut orderan selanjutnya!');
+    }
+
+
 }

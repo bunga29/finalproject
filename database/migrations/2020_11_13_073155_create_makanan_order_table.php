@@ -24,6 +24,7 @@ class CreateMakananOrderTable extends Migration
             $table->foreign('makanan_id')
                 ->references('id')
                 ->on('makanans')->onDelete('cascade');
+            $table->integer('jumlah');
         });
     }
 

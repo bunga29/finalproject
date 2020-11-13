@@ -19,18 +19,22 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/listmakanan', 'MakananController@index')->name('makanan.list');
+//list makanan
+Route::get('/listmakanan', 'MakananController@index')->middleware('auth')->name('makanan.list');
 Route::post('/listmakanan', 'MakananController@create')->name('makanan.tambah');
 
-//edit
+//edit makanan
 Route::match(['get', 'post'], '/edit/{id}', 'MakananController@edit');
 
-
-//hapus
+//hapus makanan
 Route::delete('/delete/{id}', 'MakananController@delete')->name('makanan.delete');
 
 
+//list order
 Route::get('/listorder', 'OrderController@index')->name('order.list');
 Route::post('/listorder', 'OrderController@create')->name('order.tambah');
+Route::get('/bayar/{id}', 'OrderController@bayar')->name('order.bayar');
 
-Route::get('/listorder/{id}', 'OrderController@show')->name('order.show');
+Route::get('/admin/listorder', 'OrderController@admin')->middleware('auth')->name('order.admin');
+Route::delete('/deleteorder/{id}', 'OrderController@delete')->name('order.delete');
+Route::delete('/deleteeorder/{id}', 'OrderController@deletee')->name('order.deletee');
