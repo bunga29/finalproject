@@ -9,9 +9,25 @@
 
 
 <div class="container">
-    <button type="button" class="btn btn-success p-3 col-md-8 mb-2" data-toggle="modal" data-target="#modalOrder" style="font-size:20px;">ORDER DISINI</button>
     <div class="row">
+        <button type="button" class="border-info ml-2 btn btn-success" data-toggle="modal" data-target="#modalOrder" style="font-size:30px; width: 18rem;">
+            PESAN DISINI
+        </button>
         @foreach ($orders as $order)
+        <div class="card border-info ml-2" style="width: 18rem;">
+            <div class="card-header text-center" style="font-size:20px;">
+                <strong>{{$order->nama}}</strong>
+                <h5 class="text-center p-1 mt-1">{{$loop->iteration}} antrian lagi ya..</h5>
+            </div>
+            
+            <ul class="list-group list-group-flush">
+                    @foreach($order->makanans as $mak)
+                    <li class="list-group-item">{{$mak->nama}}</li>
+                    @endforeach
+            </ul>
+        </div>
+        @endforeach
+        <!-- @foreach ($orders as $order)
         <div class="card border-primary col-md-3 ml-2 mb-3" style="max-width: 18rem;">
             <div class="card-header">{{ $order->nama }}</div>
             <div class="card-body text-primary">
@@ -23,7 +39,7 @@
                 </ul>
             </div>
         </div>
-        @endforeach
+        @endforeach -->
     </div>
 </div>
 

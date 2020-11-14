@@ -8,7 +8,7 @@
 @endif
 <div class="container">
     <h1>Bayar yuk</h1>
-    <table class="table">
+    <table class="table col-md-8">
         <thead>
             <tr>
             <th scope="col">No</th>
@@ -36,19 +36,25 @@
                     $total = $total + $tot;
                 }
             ?>
+            <tr>
+                <td colspan="4"  class="text-center"><strong>TOTAL</strong></td>
+                <td><strong>{{$total}}</strong></td>
+            </tr>
             
         </tbody>
     </table>
 
+    <div class="row offset-md-6">
+        <form action=" {{url('/deleteeorder/'. $order->id)}}" method="post">    
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-secondary p-2">Batal deh</button>
+        </form> 
+        <a href="/listorder" class="btn btn-primary ml-2 p-2">OK</a>
+    </div>
     
-    <a href="/listorder" class="btn btn-primary">OK</a>
-    <form action=" {{url('/deleteeorder/'. $order->id)}}" method="post">    
-            @csrf
-            @method('delete')
-            <button type="submit" class="btn btn-secondary">eh gajadi deh</button>
-    </form> 
     
-    <h2>total = {{$total}}</h2>
+    
 </div>
 
 

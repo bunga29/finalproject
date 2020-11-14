@@ -7,6 +7,8 @@
         </div>
 @endif
 <div class="container">
+
+    <a class=" float-right btn btn-primary mb-2" href="/listmakanan" role="button">Lihat List Makanan</a>
     <table class="table">
     <thead class="thead-light">
         <tr>
@@ -48,7 +50,7 @@
       </div>
       
       <div class="modal-body">
-        <h4 class="text-center">Apakah makanan udah ready? </h4>
+        <h4 class="text-center">Apakah makanan <strong>{{$data->nama}}</strong> ready? </h4>
         <ul>
             @foreach($data->makanans as $mak)
                 <li> {{$mak->nama}} ({{$mak->pivot->jumlah}})</li>

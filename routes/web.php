@@ -1,5 +1,8 @@
 <?php
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Order;
+use App\Makanan;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +15,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $makanan = Makanan::get();
+    $orders = Order::get();
+     
+    return view('order.list', ['orders' => $orders, 'makanan' => $makanan]);
 });
 
 Auth::routes();
