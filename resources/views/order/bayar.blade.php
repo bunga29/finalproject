@@ -50,7 +50,12 @@
                 @method('delete')
                 <button type="submit" class="btn btn-secondary p-2">Batal deh</button>
         </form> 
-        <a href="/listorder" class="btn btn-primary ml-2 p-2">OK</a>
+        <form action=" {{url('/totalorder/'. $order->id)}}" method="post">    
+                @csrf
+                <input type="hidden" name="total" value="{{$total}}">
+                <button type="submit" class="btn btn-primary p-2 ml-2">OK</button>
+        </form> 
+        
     </div>
     
     

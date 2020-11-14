@@ -18,6 +18,15 @@ class OrderController extends Controller
         return view('order.list', ['orders' => $orders, 'makanan' => $makanan]);
     }
 
+    public static function riwayat()
+    {
+        //mengambil data
+        $makanan = Makanan::get();
+        $orders = Order::get();
+     
+        return view('order.riwayat', ['orders' => $orders, 'makanan' => $makanan]);
+    }
+
     public static function admin()
     {
         //mengambil data
@@ -36,15 +45,18 @@ class OrderController extends Controller
 
     public function create(Request $request)
     {   
+        //dd($request->all());
         $order_baru = new Order();
         
         $order_baru->nama = request('nama');
+        
+        $order_baru->keterangan = request('keterangan');
+        $order_baru->total = request('total');
         $order_baru->save();
-
         $order_temp = new Order();
         $order_temp->id_mak = request('id_mak');
         $order_temp->jumlah_mak = request('jumlah_mak');
-
+        
         
         $i=0;
         foreach($order_temp->jumlah_mak as $jumlah){
@@ -57,22 +69,40 @@ class OrderController extends Controller
             }
             $i++;
         }
-        
        
-        //dd($order_baru->makanans);
+        //dd($order_baru);
         return redirect()->route('order.bayar', ['id' => $order_baru->id]);
     }
 
-    public function deletee($id)
-    {
-        Order::where(['id'=>$id])->delete();
-        return redirect()->route('order.list')->with('status', 'Ayo pesenn!!');
-    }
 
     public function delete($id)
     {
         Order::where(['id'=>$id])->delete();
         return redirect()->back()->with('status', 'Yok lanjut orderan selanjutnya!');
+    }
+
+    public function total(Request $request, $id)
+    {   
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $order = Order::findOrFail($id);
+            
+            $order->update(['total'=>$data['total']]);
+            
+            return redirect()->route('order.list')->with('status', 'Mohon ditunggu ya lorr');
+        }
+    }
+
+    public function complete(Request $request, $id)
+    {   
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $order = Order::findOrFail($id);
+            
+            $order->update(['keterangan'=>$data['keterangan']]);
+            
+            return redirect()->route('order.admin')->with('status', 'Selanjutnya yok');
+        }
     }
 
 

@@ -18,7 +18,7 @@ class Order extends Model
     }
 
     protected $fillable = [
-        'nama', 
+        'nama', 'total', 'keterangan',
     ];
     // protected $casts = [
     //     'harga_mak' => 'array',

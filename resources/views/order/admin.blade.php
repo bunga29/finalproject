@@ -7,8 +7,7 @@
         </div>
 @endif
 <div class="container">
-
-    <a class=" float-right btn btn-primary mb-2" href="/listmakanan" role="button">Lihat List Makanan</a>
+    <h1>DAFTAR ANTRIAN PESANAN</h1>
     <table class="table">
     <thead class="thead-light">
         <tr>
@@ -20,26 +19,28 @@
     </thead>
     <tbody>
         @foreach($orders as $order)
-        <tr>
-            <th scope="row">{{ $loop->iteration}}</th>
-            <td>{{ $order->nama}}</td>
-            <td>
-                <ul>
-                @foreach($order->makanans as $mak)
-                    <li>{{$mak->nama}} ({{$mak->pivot->jumlah}}) </li>
-                @endforeach
-                </ul>
-            </td>
-            <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-{{$order->id}}">Hapus kalo udah jadi</button>
-        </tr>
+          @if($order->keterangan == "proses")
+          <tr>
+              <th scope="row">{{ $loop->iteration}}</th>
+              <td>{{ $order->nama}}</td>
+              <td>
+                  <ul>
+                  @foreach($order->makanans as $mak)
+                      <li>{{$mak->nama}} ({{$mak->pivot->jumlah}}) </li>
+                  @endforeach
+                  </ul>
+              </td>
+              <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#completeModal-{{$order->id}}">Hapus kalo udah jadi</button>
+          </tr>
+          @endif
         @endforeach
     </tbody>
     </table>
 </div>
 
-<!-- MODAL DELETE ORDER -->
+<!-- MODAL ORDER COMPLETE -->
 @foreach($orders as $data)
-<div class="modal fade" id="deleteModal-{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="completeModal-{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -58,9 +59,9 @@
         </ul>
       </div>  
       <div class="modal-footer">
-        <form action=" {{ url('/deleteorder/'. $data->id) }} " method="post">    
+        <form action=" {{ url('/completeorder/'. $data->id) }} " method="post">    
             @csrf
-            @method('delete')
+            <input type="hidden" class="form-control" name="keterangan" value="complete">
             <button type="submit" class="btn btn-primary">Ready gan!</button>
         </form> 
         <button type="button" class="btn btn-secondary" data-dismiss="modal">eh, masih kurang</button>

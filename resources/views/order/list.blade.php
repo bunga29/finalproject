@@ -14,38 +14,27 @@
             PESAN DISINI
         </button>
         @foreach ($orders as $order)
-        <div class="card border-info ml-2" style="width: 18rem;">
-            <div class="card-header text-center" style="font-size:20px;">
-                <strong>{{$order->nama}}</strong>
-                <h5 class="text-center p-1 mt-1">{{$loop->iteration}} antrian lagi ya..</h5>
-            </div>
-            
-            <ul class="list-group list-group-flush">
-                    @foreach($order->makanans as $mak)
-                    <li class="list-group-item">{{$mak->nama}}</li>
-                    @endforeach
-            </ul>
-        </div>
-        @endforeach
-        <!-- @foreach ($orders as $order)
-        <div class="card border-primary col-md-3 ml-2 mb-3" style="max-width: 18rem;">
-            <div class="card-header">{{ $order->nama }}</div>
-            <div class="card-body text-primary">
-                <h5 class="card-title">{{$loop->iteration}} antrian lagi ya..</h5>
-                <ul class="list-group ">
-                    @foreach($order->makanans as $mak)
-                    <li class="list-group-item">{{$mak->nama}}</li>
-                    @endforeach
+            @if($order->keterangan == "proses")
+            <div class="card border-info ml-2" style="width: 18rem;">
+                <div class="card-header text-center" style="font-size:20px;">
+                    <strong>{{$order->nama}}</strong>
+                    <h5 class="text-center p-1 mt-1">{{$loop->iteration}} antrian lagi ya..</h5>
+                </div>
+                
+                <ul class="list-group list-group-flush">
+                        @foreach($order->makanans as $mak)
+                        <li class="list-group-item">{{$mak->nama}}</li>
+                        @endforeach
                 </ul>
             </div>
-        </div>
-        @endforeach -->
+            @endif
+        @endforeach
     </div>
 </div>
 
 <!-- MODAL tambah Order -->
 <div class="modal fade" id="modalOrder" tabindex="-1" aria-labelledby="modalTambah" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Pesan Yuk</h5>
@@ -54,11 +43,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!--FORM TAMBAH BARANG-->
+                <!--FORM TAMBAH Order-->
                 <form action="{{ action('OrderController@create') }}" method="post">
                    @csrf
-                   <label for="">Namamu siapaa?</label>
-                        <input type="text" class="form-control" id="nama" name="nama" aria-describedby="emailHelp">
+                   <label>Nama Pemesan</label>
+                        <input type="text" class="form-control mb-2" id="nama" name="nama" aria-describedby="emailHelp">
+                    <h3>List Makanan</h3>
                    <table class="mt-2 table">
                         <thead>
                             <tr>
@@ -74,21 +64,20 @@
                                 <th scope="row">{{$loop->iteration}}</th>
                                 <td>{{$makan->nama}}</td>
                                 <td>{{$makan->harga}}</td>
-                                <td><input type="hidden" name="id_mak[]" value="{{$makan->id}}">
-                                    <input type="hidden" id="harga" name="harga_mak[]" value="{{$makan->harga}}">
-                                    <input type="number" id="jumlah" name="jumlah_mak[]" value="0" min="0" max="100" step="1"/>
+                                <td><input type="hidden" name="keterangan" value="proses">
+                                    <input type="hidden" name="id_mak[]" value="{{$makan->id}}">
+                                    <input type="hidden" name="harga_mak[]" value="{{$makan->harga}}">
+                                    <input type="number" name="jumlah_mak[]" value="0" min="0" max="100" step="1"/>
+                                    <input type="hidden" name="total" value="0">
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    <div class="total float-right">
-                        <strong>Total</strong>
-                        <input type="number" id="total" name="total" value="calc()" />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Lanjutkan Bayar</button>
+                
+                    <button type="submit" class="btn btn-primary float-right">Lanjutkan Bayar</button>
                 </form>
-                <!--END FORM TAMBAH BARANG-->
+                <!--END FORM TAMBAH Order-->
             </div>
         </div>
     </div>
