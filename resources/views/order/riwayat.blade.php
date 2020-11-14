@@ -27,7 +27,7 @@
                 <td>
                     <ul>
                         @foreach($order->makanans as $mak)
-                            <li>{{$mak->nama}}</li>
+                            <li>{{$mak->nama}}  ({{$mak->pivot->jumlah}})</li>
                         @endforeach
                     </ul>
                 </td>

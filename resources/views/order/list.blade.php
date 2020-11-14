@@ -13,12 +13,13 @@
         <button type="button" class="border-info ml-2 btn btn-success" data-toggle="modal" data-target="#modalOrder" style="font-size:30px; width: 18rem;">
             PESAN DISINI
         </button>
+        <?php $i=1?>
         @foreach ($orders as $order)
             @if($order->keterangan == "proses")
             <div class="card border-info ml-2" style="width: 18rem;">
                 <div class="card-header text-center" style="font-size:20px;">
                     <strong>{{$order->nama}}</strong>
-                    <h5 class="text-center p-1 mt-1">{{$loop->iteration}} antrian lagi ya..</h5>
+                    <h5 class="text-center p-1 mt-1">{{$i}} antrian lagi ya..</h5>
                 </div>
                 
                 <ul class="list-group list-group-flush">
@@ -27,6 +28,7 @@
                         @endforeach
                 </ul>
             </div>
+            <?php $i++?>
             @endif
         @endforeach
     </div>
