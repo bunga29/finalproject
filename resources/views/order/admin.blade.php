@@ -18,20 +18,25 @@
         </tr>
     </thead>
     <tbody>
+      <?php $i=1?>
         @foreach($orders as $order)
           @if($order->keterangan == "proses")
           <tr>
-              <th scope="row">{{ $loop->iteration}}</th>
+              <th scope="row">{{$i}}</th>
               <td>{{ $order->nama}}</td>
               <td>
                   <ul>
                   @foreach($order->makanans as $mak)
                       <li>{{$mak->nama}} ({{$mak->pivot->jumlah}}) </li>
                   @endforeach
+                  @foreach($order->minumans as $min)
+                      <li>{{$min->nama}} ({{$min->pivot->jumlah}}) </li>
+                  @endforeach
                   </ul>
               </td>
               <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#completeModal-{{$order->id}}">Hapus kalo udah jadi</button>
           </tr>
+          <?php $i++ ?>
           @endif
         @endforeach
     </tbody>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Makanan;
+use App\Minuman;
 class MakananController extends Controller
 {
     /**
@@ -15,9 +16,9 @@ class MakananController extends Controller
     public function index()
     {
         //mengambil data
-        $makanan = DB::table('makanans')->get();
-
-        return view('makanan.list', ['makanan' => $makanan]);
+        $makanan = Makanan::get();
+        $minuman = Minuman::get();
+        return view('makanan.list', ['makanan' => $makanan, 'minuman' => $minuman] );
 
     }
 

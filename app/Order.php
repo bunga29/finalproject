@@ -17,6 +17,15 @@ class Order extends Model
             'makanan_id')->withPivot('jumlah');
     }
 
+    public function minumans()
+    {
+        return $this->belongsToMany(
+            Minuman::class, 
+            'minuman_order',
+            'order_id',
+            'minuman_id')->withPivot('jumlah');
+    }
+
     protected $fillable = [
         'nama', 'total', 'keterangan',
     ];

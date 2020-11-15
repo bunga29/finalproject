@@ -35,6 +35,20 @@
                     $i++;
                     $total = $total + $tot;
                 }
+                foreach($order->minumans as $min){
+                    $tot= $min->pivot->jumlah * $min->harga;
+                    echo
+                    "<tr>
+                        <th>{$i}</th>
+                        <td>{$min->nama}</td>
+                        <td>{$min->harga}</td>
+                        <td>{$min->pivot->jumlah }</td>
+                        <td>{$tot} </td>
+                        
+                    </tr>";
+                    $i++;
+                    $total = $total + $tot;
+                }
             ?>
             <tr>
                 <td colspan="4"  class="text-center"><strong>TOTAL</strong></td>
@@ -45,7 +59,7 @@
     </table>
 
     <div class="row offset-md-6">
-        <form action=" {{url('/deleteeorder/'. $order->id)}}" method="post">    
+        <form action=" {{url('/deleteorder/'. $order->id)}}" method="post">    
                 @csrf
                 @method('delete')
                 <button type="submit" class="btn btn-secondary p-2">Batal deh</button>

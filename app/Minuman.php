@@ -4,14 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Makanan extends Model
+class Minuman extends Model
 {
+    
+    public $table = "minumans";
+    
     public function orders()
     {
         return $this->belongsToMany(
             Order::class, 
-            'makanan_order',
-            'makanan_id',
+            'minuman_order',
+            'minuman_id',
             'order_id');
     }
 

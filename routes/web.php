@@ -3,6 +3,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Order;
 use App\Makanan;
+use App\Minuman;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,8 +18,9 @@ use App\Makanan;
 Route::get('/', function () {
     $makanan = Makanan::get();
     $orders = Order::get();
-     
-    return view('order.list', ['orders' => $orders, 'makanan' => $makanan]);
+    $minuman = Minuman::get();
+
+    return view('order.list', ['orders' => $orders, 'makanan' => $makanan, 'minuman' => $minuman] );
 });
 
 Auth::routes();
@@ -28,13 +30,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 //list makanan
 Route::get('/listmakanan', 'MakananController@index')->middleware('auth')->name('makanan.list');
 Route::post('/listmakanan', 'MakananController@create')->name('makanan.tambah');
+Route::post('/listminuman', 'MinumanController@create')->name('minuman.tambah');
 
 //edit makanan
 Route::match(['get', 'post'], '/edit/{id}', 'MakananController@edit');
+Route::match(['get', 'post'], '/editminum/{id}', 'MinumanController@edit');
 
 //hapus makanan
 Route::delete('/delete/{id}', 'MakananController@delete')->name('makanan.delete');
-
+Route::delete('/deleteminum/{id}', 'MinumanController@delete')->name('makanan.delete');
 
 //list order
 Route::get('/listorder', 'OrderController@index')->name('order.list');

@@ -7,7 +7,15 @@
         </div>
 @endif
 <div class="container">
-    <button type="button" class="btn btn-success float-right mb-2" data-toggle="modal" data-target="#modalTambah">Tambah Makanan</button>
+    <?php 
+        $total=0;
+        foreach($orders as $order){
+            $total += $order->total;
+        }
+    ?>
+    <div class="btn btn-danger m-2"> TOTAL PEMASUKAN: 
+        <h2 class="m-0">Rp. {{$total}},00 </h2>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -16,6 +24,7 @@
                 <th scope="col">Nama</th>
                 <th scope="col">Pesanan</th>
                 <th scope="col">Total</th>
+                <th scope="col">Status</th>
             </tr>
         </thead>
         <tbody>
@@ -25,13 +34,23 @@
                 <td>{{$order->updated_at}}</td>
                 <td>{{$order->nama}}</td>
                 <td>
-                    <ul>
+                    
                         @foreach($order->makanans as $mak)
-                            <li>{{$mak->nama}}  ({{$mak->pivot->jumlah}})</li>
+                            <p class="m-0">{{$mak->nama}}  ({{$mak->pivot->jumlah}})</p>
                         @endforeach
-                    </ul>
+                        @foreach($order->minumans as $min)
+                            <p>{{$min->nama}}  ({{$min->pivot->jumlah}})</p>
+                        @endforeach
+                    
                 </td>
                 <td>{{$order->total}}</td>
+                <td>
+                    @if($order->keterangan == "proses")
+                        <strong class="text-danger">ON PROCESS</strong>
+                    @else
+                        <strong class="text-info">COMPLETE</strong>
+                    @endif
+                </td>
             </tr>
             @endforeach
         </tbody>
